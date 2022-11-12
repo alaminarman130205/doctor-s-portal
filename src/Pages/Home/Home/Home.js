@@ -1,9 +1,12 @@
 import React from "react";
+import Banner from "../Banner/Banner";
+import InfoCarts from "../InfoCarts/InfoCarts";
 
 const Home = () => {
   return (
     <div className="mx-5">
-      <h1>this is home page</h1>
+      <Banner></Banner>
+      <InfoCarts></InfoCarts>
     </div>
   );
 };
