@@ -16,7 +16,7 @@ const SignUp = () => {
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7">
-        <h2 className="text-xl text-center">Login</h2>
+        <h2 className="text-xl text-center">Sign Up</h2>
         <form onSubmit={handleSubmit(handleSignUp)}>
           <div className="form-control w-full max-w-xs">
             <label className="label">
@@ -57,17 +57,18 @@ const SignUp = () => {
                   value: 6,
                   message: "password must be six character or longer",
                 },
+                pattern: {
+                  value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/,
+                  message: "password must be strong",
+                },
               })}
             />
             <p className="text-red-600">{errors.password?.message}</p>
-            <label className="label">
-              <span className="label-text">Forget password</span>
-            </label>
           </div>
           <input
-            className="btn btn-primary w-full  text-white"
+            className="btn btn-primary w-full  text-white mt-5"
             type="submit"
-            value="Login"
+            value="Sign Up"
           />
         </form>
         <p>
