@@ -2,14 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const handleLogin = (data) => {
+  const handleSignUp = (data) => {
     console.log(data);
   };
 
@@ -17,7 +17,20 @@ const Login = () => {
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7">
         <h2 className="text-xl text-center">Login</h2>
-        <form onSubmit={handleSubmit(handleLogin)}>
+        <form onSubmit={handleSubmit(handleSignUp)}>
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              className="input input-bordered w-full max-w-xs"
+              type="text"
+              {...register("name", { required: "Name is required" })}
+            />
+            {errors.email && (
+              <p className="text-red-600">{errors.name?.message}</p>
+            )}
+          </div>
           <div className="form-control w-full max-w-xs">
             <label className="label">
               <span className="label-text">Email</span>
@@ -58,9 +71,9 @@ const Login = () => {
           />
         </form>
         <p>
-          new to doctor's portal{" "}
-          <Link className="text-primary" to="/signup">
-            create new account
+          already have an account{" "}
+          <Link className="text-primary" to="/login">
+            please login
           </Link>
         </p>
         <div className="divider">OR</div>
@@ -70,4 +83,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
