@@ -1,9 +1,13 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
-const BookingModal = ({ treatement, selectedDate, setTreatment }) => {
-  const { name, slots } = treatement;
+const BookingModal = ({ treatement, selectedDate, setTreatment, refetch }) => {
+  const { name: treatmentName, slots } = treatement;
   const date = format(selectedDate, "PP");
+
+  const { user } = useContext(AuthContext);
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -16,17 +20,32 @@ const BookingModal = ({ treatement, selectedDate, setTreatment }) => {
 
     const booking = {
       appointmentDate: date,
-      treatment: name,
+      treatment: treatmentName,
       patientName: name,
       phone,
       email,
       slot,
     };
 
-    //TODO:send data to the server;
+    // data send to the mongobd
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setTreatment(null);
+          toast.success("booking confirmed");
+          refetch();
+        }
+      });
 
-    console.log(booking);
-    setTreatment(null);
+    //TODO:send data to the server;
   };
   return (
     <>
@@ -39,7 +58,7 @@ const BookingModal = ({ treatement, selectedDate, setTreatment }) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">{name}</h3>
+          <h3 className="text-lg font-bold">{treatmentName}</h3>
           <form
             onSubmit={handleBooking}
             className="grid grid-cols-1 gap-3 mt-6"
@@ -49,6 +68,7 @@ const BookingModal = ({ treatement, selectedDate, setTreatment }) => {
               type="text"
               value={date}
               className="input w-full input-bordered "
+              readOnly
             />
             <select className="select select-info w-full" name="slot">
               {slots.map((slot, i) => (
@@ -62,12 +82,16 @@ const BookingModal = ({ treatement, selectedDate, setTreatment }) => {
               placeholder="Your Name"
               name="name"
               className="input w-full input-bordered "
+              defaultValue={user?.displayName}
+              readOnly
             />
             <input
               type="text"
               name="email"
               placeholder="Email Address"
               className="input w-full input-bordered "
+              defaultValue={user?.email}
+              readOnly
             />
             <input
               type="text"
