@@ -30,6 +30,12 @@ const DeshboardLayout = () => {
                 <li>
                   <Link to="/deshboard/allusers">All Users</Link>
                 </li>
+                <li>
+                  <Link to="/deshboard/adddoctor">Add A Doctor</Link>
+                </li>
+                <li>
+                  <Link to="/deshboard/managedoctor">Mange Doctor's</Link>
+                </li>
               </>
             )}
           </ul>
