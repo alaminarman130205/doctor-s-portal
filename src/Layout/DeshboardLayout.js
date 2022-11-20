@@ -1,8 +1,12 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthProvider";
+import useAdmin from "../Hooks/useAdmin";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const DeshboardLayout = () => {
+  const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
   return (
     <div>
       <Navbar></Navbar>
@@ -19,11 +23,15 @@ const DeshboardLayout = () => {
           <label htmlFor="deshboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 bg-base-100 text-base-content">
             <li>
-              <a href="/">Sidebar Item 1</a>
+              <Link to="/deshboard">My Appointments</Link>
             </li>
-            <li>
-              <a href="/">Sidebar Item 2</a>
-            </li>
+            {isAdmin && (
+              <>
+                <li>
+                  <Link to="/deshboard/allusers">All Users</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
