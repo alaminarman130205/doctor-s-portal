@@ -21,7 +21,7 @@ const DeshboardLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="deshboard-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-base-100 text-base-content">
+          <ul className="menu p-4 w-80 text-base-content">
             <li>
               <Link to="/deshboard">My Appointments</Link>
             </li>
