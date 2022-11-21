@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const BookingModal = ({ treatement, selectedDate, setTreatment, refetch }) => {
-  const { name: treatmentName, slots } = treatement;
+  const { name: treatmentName, slots, price } = treatement;
   const date = format(selectedDate, "PP");
 
   const { user } = useContext(AuthContext);
@@ -25,6 +25,7 @@ const BookingModal = ({ treatement, selectedDate, setTreatment, refetch }) => {
       phone,
       email,
       slot,
+      price,
     };
 
     // data send to the mongobd

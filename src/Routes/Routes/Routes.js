@@ -6,8 +6,10 @@ import AddDoctors from "../../Pages/DeshBoard/AddDoctors/AddDoctors";
 import AllUsers from "../../Pages/DeshBoard/AllUsers/AllUsers";
 import MangeDoctors from "../../Pages/DeshBoard/MangeDoctor/MangeDoctors";
 import Myappointment from "../../Pages/DeshBoard/Myappointment/Myappointment";
+import Payment from "../../Pages/DeshBoard/Payment/Payment";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import SignUp from "../../Pages/SignUp/SignUp";
 import AdminRoutes from "../AdminRoute/AdminRoutes";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -16,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <DisplayError></DisplayError>,
     children: [
       {
         path: "/",
@@ -42,6 +45,7 @@ const router = createBrowserRouter([
         <DeshboardLayout></DeshboardLayout>
       </PrivateRoute>
     ),
+    errorElement: <DisplayError></DisplayError>,
     children: [
       {
         path: "/deshboard",
@@ -72,6 +76,17 @@ const router = createBrowserRouter([
             <MangeDoctors></MangeDoctors>{" "}
           </AdminRoutes>
         ),
+      },
+      {
+        path: "/deshboard/payment/:id",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <Payment></Payment>{" "}
+          </AdminRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/bookings/${params.id}`),
       },
     ],
   },
